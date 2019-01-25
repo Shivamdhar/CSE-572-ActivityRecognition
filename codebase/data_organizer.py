@@ -132,8 +132,8 @@ def activity_division():
 			files = os.listdir(constants.sample_path + "/" + user + "/" + folder)
 			files.sort()
 
-			emg_file = files[5] #retain annotated post duplicate removal EMG file
-			imu_file = files[4] #retain annotated IMU file
+			emg_file = files[4] #retain annotated post duplicate removal EMG file
+			imu_file = files[3] #retain annotated IMU file
 
 			emg_data = open(constants.sample_path + "/" + user + "/" + folder + "/" + emg_file).readlines()
 			imu_data = open(constants.sample_path + "/" + user + "/" + folder + "/" + imu_file).readlines()
@@ -153,7 +153,6 @@ def activity_division():
 				temp1 = emg_data[i].split(",")
 				temp2 = imu_data[i].split(",")
 				temp2 = temp2[:-1]
-
 				if temp1[-1].strip() == "0":
 					output_non_eating.write(",".join(temp2) + "," + ",".join(temp1[1:-1]) + "\n")
 				else:
