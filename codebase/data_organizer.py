@@ -104,9 +104,12 @@ def delete_unwanted_files():
 		if(user == ".DS_Store"):
 			continue
 		folders = os.listdir(constants.sample_path + "/" + user)
+		print(folders)
 		# folders = [folder for folder in folders if not folder.endswith(".csv")]
-		files = [file for file in folders if file.endswith(".csv")]
-		[os.remove(constants.sample_path + "/" + user + "/" + file) for file in files if file.endswith(".csv")]
+
+		fork_file = os.listdir(constants.sample_path + "/" + user + "/fork")
+		[os.remove(constants.sample_path + "/" + user + "/" + "fork/" + file) for file in fork_file if file.startswith("window")]
+
 		# for folder in folders:
 		# 	if(folder == ".DS_Store"):
 		# 		continue
@@ -160,7 +163,7 @@ def activity_division():
 EMG_IMU_sync()
 print("****** Alternate row removed from EMG sample dataset ******\n")
 tag_samples_using_ground_truth()
-print("****** Sample dataset tagget using ground truth ******\n")
+print("****** Sample dataset tagged using ground truth ******\n")
 activity_division()
 print("****** Separate activity dataset created ******\n")
 
