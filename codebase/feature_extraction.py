@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import os
 import pandas as pd
-import pywt
+# import pywt
 from scipy.fftpack import fft
 from sklearn.preprocessing import MinMaxScaler
 
@@ -113,8 +113,11 @@ def yaw(row):
 def RMS(x):
     return np.sqrt(sum(x**2/len(x)))
 
+
+eating_dataset = ""
 def extract_statistical_fetaures(user, eating_type):
 	scaler = MinMaxScaler()
+	global eating_dataset
 	eating_dataset = pd.read_csv(constants.sample_path + "/" + user + "/" + eating_type + "/window_eating.csv")
 	non_eating_dataset = pd.read_csv(constants.sample_path + "/" + user + "/" + eating_type + "/window_non_eating.csv")
 	df = pd.DataFrame(eating_dataset, columns=["Timestamp","Orientation X","Orientation Y","Orientation Z","Orientation W","Accelerometer X","Accelerometer Y","Accelerometer Z","Gyroscope X","Gyroscope Y","Gyroscope Z","EMG1","EMG2","EMG3","EMG4","EMG5","EMG6","EMG7","EMG8","Roll","Yaw","Window"])
@@ -167,12 +170,16 @@ def visualize_accelerometer_readings(property):
 	df = pd.read_csv("user09_fork_description_eating.csv", header=[0,1])
 	non_df = pd.read_csv("user09_fork_description_non_eating.csv", header=[0,1])
 	plt.subplot(311)
+	plt.ylabel("Accelerometer X : "+property)
 	plt.plot(non_df["Accelerometer X"][property], 'r--', df["Accelerometer X"][property], 'b--')
 
 	plt.subplot(312)
+	plt.ylabel("Accelerometer Y : "+property)
 	plt.plot(non_df["Accelerometer Y"][property], 'r--', df["Accelerometer Y"][property], 'b--')
 
 	plt.subplot(313)
+	plt.ylabel("Accelerometer Z : "+property)
+	plt.xlabel("Samples")
 	plt.plot(non_df["Accelerometer Z"][property], 'r--', df["Accelerometer Z"][property], 'b--')
 
 	plt.show()
@@ -181,15 +188,20 @@ def visualize_orientation_readings(property):
 	df = pd.read_csv("user09_fork_description_eating.csv", header=[0,1])
 	non_df = pd.read_csv("user09_fork_description_non_eating.csv", header=[0,1])
 	plt.subplot(411)
+	plt.ylabel("Orientation X : "+property)
 	plt.plot(non_df["Orientation X"][property], 'r--', df["Orientation X"][property], 'b--')
 
 	plt.subplot(412)
+	plt.ylabel("Orientation Y : "+property)
 	plt.plot(non_df["Orientation Y"][property], 'r--', df["Orientation Y"][property], 'b--')
 
 	plt.subplot(413)
+	plt.ylabel("Orientation X : "+property)
 	plt.plot(non_df["Orientation Z"][property], 'r--', df["Orientation Z"][property], 'b--')
 
 	plt.subplot(414)
+	plt.ylabel("Orientation W : "+property)
+	plt.xlabel("Samples")
 	plt.plot(non_df["Orientation W"][property], 'r--', df["Orientation W"][property], 'b--')
 
 	plt.show()
@@ -198,31 +210,136 @@ def visualize_gyroscope_readings(property):
 	df = pd.read_csv("user09_fork_description_eating.csv", header=[0,1])
 	non_df = pd.read_csv("user09_fork_description_non_eating.csv", header=[0,1])
 	plt.subplot(311)
+	plt.ylabel("Gyroscope X : "+property)
 	plt.plot(non_df["Gyroscope X"][property], 'r--', df["Gyroscope X"][property], 'b--')
 
 	plt.subplot(312)
+	plt.ylabel("Gyroscope Y : "+property)
 	plt.plot(non_df["Gyroscope Y"][property], 'r--', df["Gyroscope Y"][property], 'b--')
 
 	plt.subplot(313)
+	plt.ylabel("Gyroscope W : "+property)
+	plt.xlabel("Samples")
 	plt.plot(non_df["Gyroscope Z"][property], 'r--', df["Gyroscope Z"][property], 'b--')
 
 	plt.show()
 
+
+def visualize_emg_readings_1(property):
+	df = pd.read_csv("user09_fork_description_eating.csv", header=[0,1])
+	non_df = pd.read_csv("user09_fork_description_non_eating.csv", header=[0,1])
+	plt.subplot(411)
+	plt.ylabel("EMG1 : "+property)
+	plt.plot(non_df["EMG1"][property], 'r--', df["EMG1"][property], 'b--')
+
+	plt.subplot(412)
+	plt.ylabel("EMG2 : "+property)
+	plt.plot(non_df["EMG2"][property], 'r--', df["EMG2"][property], 'b--')
+
+	plt.subplot(413)
+	plt.ylabel("EMG3 : "+property)
+	plt.plot(non_df["EMG3"][property], 'r--', df["EMG3"][property], 'b--')
+
+	plt.subplot(414)
+	plt.ylabel("EMG4 : "+property)
+	plt.xlabel("Samples")
+	plt.plot(non_df["EMG4"][property], 'r--', df["EMG4"][property], 'b--')
+
+	plt.show()
+
+def visualize_emg_readings_2(property):
+	df = pd.read_csv("user09_fork_description_eating.csv", header=[0,1])
+	non_df = pd.read_csv("user09_fork_description_non_eating.csv", header=[0,1])
+	plt.subplot(411)
+	plt.ylabel("EMG5 : "+property)
+	plt.plot(non_df["EMG5"][property], 'r--', df["EMG5"][property], 'b--')
+
+	plt.subplot(412)
+	plt.ylabel("EMG6 : "+property)
+	plt.plot(non_df["EMG6"][property], 'r--', df["EMG6"][property], 'b--')
+
+	plt.subplot(413)
+	plt.ylabel("EMG7 : "+property)
+	plt.plot(non_df["EMG7"][property], 'r--', df["EMG7"][property], 'b--')
+
+	plt.subplot(414)
+	plt.ylabel("EMG8 : "+property)
+	plt.xlabel("Samples")
+	plt.plot(non_df["EMG8"][property], 'r--', df["EMG8"][property], 'b--')
+
+	plt.show()
+
+def visualize_roll_readings(property):
+	df = pd.read_csv("user09_fork_description_eating.csv", header=[0,1])
+	non_df = pd.read_csv("user09_fork_description_non_eating.csv", header=[0,1])
+	plt.subplot(111)
+	plt.ylabel("Roll : "+property)
+	plt.xlabel("Samples")
+	plt.plot(non_df["Roll"][property], 'r--', df["Roll"][property], 'b--')
+
+	plt.show()
+
+
+def visualize_yaw_readings(property):
+	df = pd.read_csv("user09_fork_description_eating.csv", header=[0,1])
+	non_df = pd.read_csv("user09_fork_description_non_eating.csv", header=[0,1])
+	plt.subplot(111)
+	plt.ylabel("Yaw : "+property)
+	plt.xlabel("Samples")
+	plt.plot(non_df["Yaw"][property], 'r--', df["Yaw"][property], 'b--')
+
+	plt.show()
+
+
+def visualize_correlation(property1, property2):
+	global eating_dataset
+	corr = eating_dataset.groupby('Window')[[property1, property2]].corr().iloc[1::2,-1]
+	result = []
+	for i in range(corr.shape[0]):
+		result.append(corr[i][0])
+	plt.ylabel(property1 + "&" + property2)
+	plt.plot(result, 'r--')
+	plt.show()
+
+
 extract_roll_pitch_yaw()
 add_windows_to_activity_samples()
-extract_statistical_fetaures("user09", "fork")
-visualize_accelerometer_readings("mean")
-visualize_accelerometer_readings("std")
-visualize_accelerometer_readings("RMS")
-visualize_accelerometer_readings("amin")
-visualize_accelerometer_readings("amax")
-visualize_orientation_readings("mean")
-visualize_orientation_readings("std")
-visualize_orientation_readings("RMS")
-visualize_orientation_readings("amin")
-visualize_orientation_readings("amax")
-visualize_gyroscope_readings("mean")
-visualize_gyroscope_readings("std")
-visualize_gyroscope_readings("RMS")
-visualize_gyroscope_readings("amin")
-visualize_gyroscope_readings("amax")
+extract_statistical_fetaures("user09", "spoon")
+
+flag = True
+while(flag):
+	choice = int(input("\nEnter choice: \n1)Visualize accelerometer readings \n2)Visualize orientation readings \n3)Visualize gyroscope readings"\
+		"\n4)Visualize roll readings \n5)Visualize yaw readings \n6)Visualize emg readings \n7)Visualize correlation \n8)Exit\n"))
+
+	if choice == 1:
+		property_name = input("Enter property name\n")
+		visualize_accelerometer_readings(property_name)
+
+	elif choice == 2:
+		property_name = input("Enter property name\n")
+		visualize_orientation_readings(property_name)
+
+	elif choice == 3:
+		property_name = input("Enter property name\n")
+		visualize_gyroscope_readings(property_name)
+
+	elif choice == 4:
+		property_name = input("Enter property name\n")
+		visualize_roll_readings(property_name)
+
+	elif choice == 5:
+		property_name = input("Enter property name\n")
+		visualize_yaw_readings(property_name)
+
+	elif choice == 6:
+		property_name = input("Enter property name\n")
+		visualize_emg_readings_1(property_name)
+		visualize_emg_readings_2(property_name)
+
+	elif choice == 7:
+		property_name_1 = input("Enter property name 1\n")
+		property_name_2 = input("Enter property name 2\n")
+		visualize_correlation(property_name_1, property_name_2)
+
+	else:
+		flag = False
