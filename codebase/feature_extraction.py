@@ -143,7 +143,10 @@ def extract_statistical_fetaures(user, eating_type):
 											'EMG8':['mean','std', np.min, np.max, RMS],
 											'Roll':['mean','std', np.min, np.max, RMS],
 											'Yaw':['mean','std', np.min, np.max, RMS]})
+
 	df.to_csv("user09_fork_description_eating.csv")
+
+	# result.to_csv("user09_fork_description_eating_corr.csv")
 	non_df = non_eating_dataset.groupby('Window').agg({'Orientation X':['mean','std', np.min, np.max, RMS],
 											'Orientation Y':['mean','std', np.min, np.max, RMS],
 											'Orientation Z':['mean','std', np.min, np.max, RMS],
@@ -165,6 +168,102 @@ def extract_statistical_fetaures(user, eating_type):
 											'Roll':['mean','std', np.min, np.max, RMS],
 											'Yaw':['mean','std', np.min, np.max, RMS]})
 	non_df.to_csv("user09_fork_description_non_eating.csv")
+	corr1 = non_eating_dataset.groupby('Window')[['Accelerometer X', 'Roll']].corr().iloc[0::2,-1]
+	# corr1_ = non_eating_dataset.groupby('Window')[['Accelerometer X', 'Roll']].corr().iloc[0::2,-1]
+
+	result = []
+	for i in range(corr1.shape[0]):
+		result.append(corr1[i][0])
+	print(result)
+	# result_ = []
+	# for i in range(corr1_.shape[0]):
+	# 	result_.append(corr1_[i][0])
+
+	plt.subplot(311)
+	plt.plot(result, 'r--')
+	# plt.plot(result_, 'b--')
+	plt.ylabel("Accelerometer X & Roll")
+	# print(corr1)
+	corr2 = non_eating_dataset.groupby('Window')[['Accelerometer Y', 'Roll']].corr().iloc[::2,-1]
+	# corr2_ = non_eating_dataset.groupby('Window')[['Accelerometer Y', 'Roll']].corr().iloc[::2,-1]
+	result = []
+	for i in range(corr2.shape[0]):
+		result.append(corr2[i][0])
+	print(result)
+	# result_ = []
+	# for i in range(corr2_.shape[0]):
+	# 	result_.append(corr2_[i][0])
+	plt.subplot(312)
+	plt.plot(result, 'r--')
+	# plt.plot(result_, 'b--')
+	plt.ylabel("Accelerometer Y & Roll")
+	corr3 = non_eating_dataset.groupby('Window')[['Accelerometer Z', 'Roll']].corr().iloc[1::2,-1]
+	# corr3_ = non_eating_dataset.groupby('Window')[['Accelerometer Z', 'Roll']].corr().iloc[1::2,-1]
+	result = []
+	for i in range(corr3.shape[0]):
+		result.append(corr3[i][0])
+	# result_ = []
+	# for i in range(corr3_.shape[0]):
+	# 	result_.append(corr3_[i][0])
+	print(result)
+	plt.subplot(313)
+	plt.plot(result, 'r--')
+	# plt.plot(result_, 'b--')
+	plt.ylabel("Accelerometer Z & Roll")
+	plt.xlabel("Samples")
+	plt.show()
+
+
+	corr4 = eating_dataset.groupby('Window')[['Accelerometer X', 'Yaw']].corr().iloc[1::2,-1]
+	result = []
+	for i in range(corr4.shape[0]):
+		result.append(corr4[i][0])
+	plt.subplot(311)
+	plt.ylabel("Accelerometer X & Yaw")
+	plt.plot(result, 'r--')
+	corr5 = eating_dataset.groupby('Window')[['Accelerometer Y', 'Yaw']].corr().iloc[1::2,-1]
+	result = []
+	for i in range(corr5.shape[0]):
+		result.append(corr5[i][0])
+	plt.subplot(312)
+	plt.ylabel("Accelerometer Y & Yaw")
+	plt.plot(result, 'r--')
+	corr6 = eating_dataset.groupby('Window')[['Accelerometer Z', 'Yaw']].corr().iloc[1::2,-1]
+	plt.subplot(313)
+	result = []
+	for i in range(corr6.shape[0]):
+		result.append(corr6[i][0])
+	plt.plot(result, 'r--')
+	plt.ylabel("Accelerometer Z & Yaw")
+	plt.show()
+
+
+	corr7 = non_eating_dataset.groupby('Window')[['Accelerometer X', 'Accelerometer Y']].corr().iloc[0::2,-1]
+	plt.subplot(311)
+	result = []
+	for i in range(corr7.shape[0]):
+		result.append(corr7[i][0])
+	print(result)
+	plt.plot(result, 'r--')
+	plt.ylabel("Accelerometer X & Y")
+	corr8 = non_eating_dataset.groupby('Window')[['Accelerometer X', 'Accelerometer Z']].corr().iloc[0::2,-1]
+	plt.subplot(312)
+	result = []
+	for i in range(corr8.shape[0]):
+		result.append(corr8[i][0])
+	plt.plot(result, 'b--')
+	print(result)
+	plt.ylabel("Accelerometer X & Z")
+	corr9 = non_eating_dataset.groupby('Window')[['Accelerometer Y', 'Accelerometer Z']].corr().iloc[0::2,-1]
+	plt.subplot(313)
+	result = []
+	for i in range(corr9.shape[0]):
+		result.append(corr9[i][0])
+	plt.plot(result, 'g--')
+	print(result)
+	plt.ylabel("Accelerometer Y & Z")
+	plt.xlabel("Samples")
+	plt.show()
 
 def visualize_accelerometer_readings(property):
 	df = pd.read_csv("user09_fork_description_eating.csv", header=[0,1])

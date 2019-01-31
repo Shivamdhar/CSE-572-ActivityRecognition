@@ -1,7 +1,8 @@
-import pandas as pd
-import numpy as np
-from sklearn.decomposition import PCA
 import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+from sklearn.decomposition import PCA
+
 
 df = pd.read_csv("user09_fork_description_eating.csv", header=[0,1])
 non_df = pd.read_csv("user09_fork_description_non_eating.csv", header=[0,1])
@@ -9,7 +10,8 @@ non_df = pd.read_csv("user09_fork_description_non_eating.csv", header=[0,1])
 activities = ["eating"] * len(df) + ["non_eating"] * len(non_df)
 frames = [df, non_df]
 result = pd.concat(frames)
-
+# print(np.where(np.isnan(result)))
+result = np.nan_to_num(result)
 pca = PCA(n_components=2)
 principalComponents = pca.fit_transform(result)
 principalDf = pd.DataFrame(data = principalComponents, columns = ['principal component 1', 'principal component 2'])
@@ -36,12 +38,10 @@ print(pca.explained_variance_ratio_)
 """
 visualize pca components
 """
-pca = PCA(n_components=54)
+pca = PCA(n_components=79)
 principalComponents = pca.fit_transform(result)
 
-# print(principalComponents[0:10])
-# print(pca.components_[0:10])
-
-for i in range(3):
+for i in range(79):
 	plt.plot(pca.components_[i], 'r')
 plt.show()
+print(pca.explained_variance_ratio_)
